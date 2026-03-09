@@ -1,0 +1,167 @@
+# CAMDEATROYERL0L-SKY-DESTROYER-REMAKE
+Zepetod_taik_bodoh l0l
+-- CAM DESTROYER FINAL V3 (FIXED)
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- ensure animator exists
+local animator = humanoid:FindFirstChildOfClass("Animator") or Instance.new("Animator", humanoid)
+
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "CamDestroyer"
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0,300,0,260)
+frame.Position = UDim2.new(0,20,0.4,0)
+frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+frame.BorderSizePixel = 0
+
+-- TITLE
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1,0,0,40)
+title.BackgroundTransparency = 1
+title.Text = "The Cam Destroyer lol"
+title.TextColor3 = Color3.new(1,1,1)
+title.TextScaled = true
+title.Font = Enum.Font.SourceSansBold
+
+-- rainbow outline
+function rainbowBorder(button)
+	local stroke = Instance.new("UIStroke", button)
+	stroke.Thickness = 2
+
+	task.spawn(function()
+		while true do
+			for i = 0,255 do
+				stroke.Color = Color3.fromHSV(i/255,1,1)
+				task.wait()
+			end
+		end
+	end)
+end
+
+-- button creator
+function createButton(text,y)
+
+	local b = Instance.new("TextButton", frame)
+	b.Size = UDim2.new(0.9,0,0,30)
+	b.Position = UDim2.new(0.05,0,0,y)
+	b.BackgroundColor3 = Color3.fromRGB(40,40,40)
+	b.TextColor3 = Color3.new(1,1,1)
+	b.Text = text
+	b.TextScaled = true
+	b.Font = Enum.Font.SourceSansBold
+
+	rainbowBorder(b)
+
+	return b
+
+end
+
+-- BUTTONS
+local qButton = createButton("(Q)",50)
+local xButton = createButton("(X)",90)
+local screamButton = createButton("SCREAM OF AGONY",130)
+local musicButton = createButton("c00lkid music l0l",170)
+local skyButton = createButton("SKY DESTROYER REMAKE TED_TXT2",210)
+
+-- welcome window
+local welcome = Instance.new("TextLabel", gui)
+welcome.Size = UDim2.new(0,300,0,40)
+welcome.Position = UDim2.new(1,-310,0,10)
+welcome.BackgroundColor3 = Color3.fromRGB(20,20,20)
+welcome.TextColor3 = Color3.new(1,1,1)
+welcome.TextScaled = true
+welcome.Text = "welcome to my gui and credits to ted_txt2 or me for making it"
+
+task.delay(5,function()
+	welcome:Destroy()
+end)
+
+-- Q animation
+qButton.MouseButton1Click:Connect(function()
+
+	local anim = Instance.new("Animation")
+	anim.AnimationId = "rbxassetid://13633350296070"
+
+	local track = animator:LoadAnimation(anim)
+	track:Play()
+
+end)
+
+-- X arm/leg fling
+xButton.MouseButton1Click:Connect(function()
+
+	for _,partName in pairs({"RightUpperArm","LeftUpperArm","RightUpperLeg","LeftUpperLeg"}) do
+
+		local part = character:FindFirstChild(partName)
+
+		if part then
+
+			local bv = Instance.new("BodyVelocity", part)
+			bv.Velocity = Vector3.new(0,2000,0)
+			bv.MaxForce = Vector3.new(999999,999999,999999)
+
+			game.Debris:AddItem(bv,0.2)
+
+		end
+
+	end
+
+end)
+
+-- scream sound
+screamButton.MouseButton1Click:Connect(function()
+
+	local sound = Instance.new("Sound", workspace)
+	sound.SoundId = "rbxassetid://92237084433625"
+	sound.Volume = 10
+	sound:Play()
+
+	game.Debris:AddItem(sound,10)
+
+end)
+
+-- music toggle
+local music
+
+musicButton.MouseButton1Click:Connect(function()
+
+	if music then
+		music:Destroy()
+		music = nil
+	else
+
+		music = Instance.new("Sound", workspace)
+		music.SoundId = "rbxassetid://1839247124"
+		music.Looped = true
+		music.Volume = 3
+		music:Play()
+
+	end
+
+end)
+
+-- sky destroyer emote
+skyButton.MouseButton1Click:Connect(function()
+
+	local anim = Instance.new("Animation")
+	anim.AnimationId = "rbxassetid://13633350296070"
+
+	local track = animator:LoadAnimation(anim)
+	track:Play()
+
+end)
+
+-- draggable gui
+local UIS = game:GetService("UserInputService")
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+frame.InputBegan:Connect(function(input)
+
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
